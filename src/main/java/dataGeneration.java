@@ -25,29 +25,30 @@
 public class dataGeneration {
 
 	// generate gaussian dataset with center at x0,y0
-	public static int[] newSet(int dataSize, double x0, double y0){
+	public static int[] newSet(int dataSize, double x0, double y0, double sigma){
 		int[] newDataSet = new int[dataSize*dataSize];
-		int pixelSize = 10;
-		double gWidth = pixelSize*dataSize*0.2;
+		int pixelSize = 100;
+		double gWidth = pixelSize*sigma;
 		double sigmaSquare = 2*gWidth*gWidth;
-		
 		x0 *= pixelSize;
 		y0 *= pixelSize;
-		for (int xi = 0; xi < dataSize*pixelSize; xi++)
+		for (int yi = 0; yi < dataSize*pixelSize; yi++)
 		{
-			for (int yi = 0; yi < dataSize*pixelSize; yi++)
+			for (int xi = 0; xi < dataSize*pixelSize; xi++)
 			{
 				int value =  (int) (10 * Math.exp(-(
 						(xi-x0)*(xi-x0)/sigmaSquare + 
 						(yi-y0)*(yi-y0)/sigmaSquare
 						)));
 				
-				int index = (xi / pixelSize)*pixelSize + yi / pixelSize;
-						
+				int index = (xi / pixelSize) + (yi/pixelSize)*dataSize;
+				
+							
 				newDataSet[index] += value;
+			
 			}
 		}		
-
+  
 		return newDataSet;
 	}
 	
